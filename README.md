@@ -23,7 +23,7 @@ Streamlit · Gemini API
 
 ## Results
 RAG chatbot vs baseline LLM on 50-question VLSI benchmark:
-[add accuracy chart here once built in Week 7-8]
+
 
 ## How to run
 [fill this in once app.py is working]
