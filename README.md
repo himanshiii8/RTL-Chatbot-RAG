@@ -26,4 +26,4 @@ RAG chatbot vs baseline LLM on 50-question VLSI benchmark:
 
 
 ## How to run
-[fill this in once app.py is working]
+
