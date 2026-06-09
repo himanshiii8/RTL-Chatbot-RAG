@@ -147,15 +147,23 @@ class RAGSearch:
         response = self.llm.invoke([prompt])
         return response.content
 if __name__ == "__main__":
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    docs = load_all_documents(script_dir)
-    #chunks = EmbeddingPipeline().chunk_documents(docs)
-    #chunkvectors = EmbeddingPipeline().embed_chunks(chunks)
-    store = FaissVectorStore("faiss_store")
-    store.build_from_documents(docs)
-    #until and unless we dont have new files we will run load line otherwise we will run build line 
-    store.load()
+    faiss_path = "faiss_store/faiss.index"
+    meta_path = "faiss_store/metadata.pkl"
+    if not (os.path.exists(faiss_path) and os.path.exists(meta_path)):
+        # First time only - build the vector store
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        docs = load_all_documents(script_dir)
+        store = FaissVectorStore("faiss_store")
+        store.build_from_documents(docs)
+        print("[INFO] Vector store built for the first time.")
+    else:
+        print("[INFO] Vector store already exists, skipping rebuild.")
     rag_search = RAGSearch()
-    query = "what is flip-flop?"
-    summary = rag_search.search_and_summarize(query, top_k=3)
-    print("Summary: ",summary)
+    while True:
+        query = input("Ask any query: ").strip()
+        if query.lower() == "exist":
+            break
+        if not query:
+            continue
+        summary = rag_search.search_and_summarize(query, top_k=3)
+        print("Summary: ",summary)
