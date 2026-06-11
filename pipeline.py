@@ -12,6 +12,7 @@ import os
 import pickle
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
+import streamlit as st
 
 def load_all_documents(data_dir: str) -> List[Any]:
     # Use project root data folder
@@ -147,6 +148,8 @@ class RAGSearch:
         response = self.llm.invoke([prompt])
         return response.content
 if __name__ == "__main__":
+    st.title("RTL Chatbot")
+    st.markdown("Ask anything about VLSI, RTL design, timing, or Verilog.")
     faiss_path = "faiss_store/faiss.index"
     meta_path = "faiss_store/metadata.pkl"
     if not (os.path.exists(faiss_path) and os.path.exists(meta_path)):
@@ -155,15 +158,19 @@ if __name__ == "__main__":
         docs = load_all_documents(script_dir)
         store = FaissVectorStore("faiss_store")
         store.build_from_documents(docs)
-        print("[INFO] Vector store built for the first time.")
-    else:
-        print("[INFO] Vector store already exists, skipping rebuild.")
-    rag_search = RAGSearch()
-    while True:
-        query = input("Ask any query: ").strip()
-        if query.lower() == "exist":
-            break
-        if not query:
-            continue
-        summary = rag_search.search_and_summarize(query, top_k=3)
-        print("Summary: ",summary)
+    @st.cache_resource #keeps the model loaded across typing events so it stays ultra fast
+    def get_rag_pipeline():
+        return RAGSearch()
+    rag_search = get_rag_pipeline()
+    ques = st.text_input("Ask your query: ")
+    query = ques.strip()
+    if query:
+        if query.lower() == "exit":
+            st.warning("Session Expired!")
+        else:
+            with st.spinner("Searching the database.."):
+                summary = rag_search.search_and_summarize(query, top_k=3)
+            st.write("Summary: ",summary)
+            with st.expander("View system: "):
+                st.write(f"**Cleaned Search String:** `{query}`")
+                st.write(f"**Top K Context Chunks Retrieved:** `3`")
