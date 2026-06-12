@@ -155,7 +155,8 @@ if __name__ == "__main__":
     if not (os.path.exists(faiss_path) and os.path.exists(meta_path)):
         # First time only - build the vector store
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        docs = load_all_documents(script_dir)
+        data_folder = os.path.join(script_dir, "vlsi")
+        docs = load_all_documents(data_folder)
         store = FaissVectorStore("faiss_store")
         store.build_from_documents(docs)
     @st.cache_resource #keeps the model loaded across typing events so it stays ultra fast
