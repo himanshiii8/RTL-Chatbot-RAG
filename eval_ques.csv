@@ -1,0 +1,21 @@
+questions,answers,category 
+What is setup time?,Setup time is the minimum time before the clock edge that data must be stable at a flip-flop input. Violating it causes the flip-flop to capture incorrect data.,timing
+What is hold time?,Hold time is the minimum time after the clock edge that data must remain stable. A hold violation causes the flip-flop to capture a wrong value after the clock edge.,timing
+What is slack?,Slack is the difference between required arrival time and actual arrival time of a signal. Positive slack means timing is met. Negative slack means a violation exists.,timing
+What is a critical path?,The critical path is the longest combinational path between two flip-flops. It determines the maximum operating frequency of the design.,timing
+What is clock skew?,Clock skew is the difference in arrival time of the clock signal at different flip-flops in the design. It can cause both setup and hold violations.,timing
+What causes metastability?,Metastability occurs when a flip-flop samples data that is changing near the clock edge. The output enters an undefined state for an unpredictable time.,timing
+What is STA?,Static Timing Analysis verifies timing of a digital circuit without simulation. It checks all paths to ensure signals meet setup and hold requirements.,timing
+What is a timing corner?,A timing corner is a specific combination of process voltage and temperature conditions. Timing must be verified across all corners to ensure reliable operation.,timing
+What is a D flip-flop?,A D flip-flop captures the value of its D input at the rising clock edge and holds it until the next clock edge. It is the most common storage element in digital design.,flip-flops
+What is the difference between latch and flip-flop?,A latch is level-sensitive and changes output whenever the enable is active. A flip-flop is edge-triggered and only changes state on a clock edge.,flip-flops
+What is a JK flip-flop?,A JK flip-flop has J and K inputs. J=1 K=0 sets the output. J=0 K=1 resets it. J=K=1 toggles the output.,flip-flops
+What is clock domain crossing?,Clock domain crossing occurs when a signal passes between two flip-flops clocked by different clocks. It can cause metastability if not handled with a synchronizer.,flip-flops
+What is a synchronizer?,A synchronizer uses two flip-flops in series to reduce metastability probability in CDC paths. It increases mean time between failures but does not eliminate metastability.,flip-flops
+What is an SR latch?,An SR latch has Set and Reset inputs. S=1 sets output to 1. R=1 resets to 0. S=R=1 is an invalid state that must be avoided.,flip-flops
+What is a half adder?,A half adder adds two single bits and produces a sum and carry output. Sum is the XOR of inputs and carry is the AND of inputs.,combinational
+What is a full adder?,A full adder adds three bits including a carry-in and produces sum and carry-out. It is used to build multi-bit adders by chaining.,combinational
+What is a multiplexer?,A multiplexer selects one of several input signals and forwards it to the output based on select lines. A 2:1 MUX has two inputs one select and one output.,combinational
+What is a decoder?,A decoder converts a binary code of n bits into 2^n output lines. Exactly one output is active at a time based on the input combination.,combinational
+What is a priority encoder?,A priority encoder takes multiple inputs and outputs the binary code of the highest priority active input. It resolves conflicts when multiple inputs are active simultaneously.,combinational
+What is propagation delay?,Propagation delay is the time taken for the output of a logic gate to change after a change at its input. It determines the maximum speed of a combinational circuit.,combinational
