@@ -1,0 +1,28 @@
+8 standard gates: AND, OR, NOT, NAND, NOR, buffer, exclusive-OR, and equivalence.
+NAND and NOR are commutative and can be extended to more than two inputs.
+Exclusive-OR and equivalence are both commutative and associative — XOR is the 'odd function'.
+Duality principle: every valid boolean expression remains valid when operators and identity elements are interchanged.
+Buffer: outputs the same binary value as its input — used for power amplification, equivalent to two cascaded inverters.
+Logic families: TTL (standard), ECL (high speed), MOS (high density), CMOS (low power — used in cameras, portable devices).
+Fan-out: number of standard loads a gate output can drive without impairing operation.
+Fan-in: number of inputs available on a gate.
+Noise margin: maximum external noise voltage that can be added to an input without causing an undesired output change.
+Propagation delay: average time for a signal to travel from input to output — operating speed is inversely proportional to this.
+Power dissipation: power consumed by the gate that must be supplied from the power rail.
+8-bit quantity treated as a single unit = byte.
+Combinational logic is the simpler half of digital design. The output depends only on the current inputs — no memory, no clock, no state. Give it inputs, it instantly gives you outputs. Think of a light switch: press it, light changes. That's combinational.
+
+Logic gates — the building blocks
+Every digital system is built from a small set of logic gates. Each gate takes binary inputs (0 or 1) and produces a single binary output based on a simple rule:
+
+AND — output is 1 only if ALL inputs are 1. OR — output is 1 if ANY input is 1. NOT — flips the input: 0 becomes 1, 1 becomes 0. NAND / NOR — AND/OR followed by a NOT. Particularly powerful because any logic function can be built from NAND gates alone. XOR (Exclusive-OR) — output is 1 only if inputs are different. Used heavily in adders and error detection. XNOR (Equivalence) — opposite of XOR; output is 1 when inputs match.
+
+Boolean algebra
+Boolean algebra is the math behind logic gates. Every signal is either 0 (false) or 1 (true). The three fundamental operations are AND (multiplication), OR (addition), and NOT (inversion). Using boolean laws — like De Morgan's theorem — designers simplify complex expressions to use fewer gates, saving area and power.
+
+A truth table exhaustively lists every combination of inputs and the resulting output. It's the complete specification of any combinational function.
+
+Logic families & key parameters
+Physical gates are made using different technologies: TTL (standard general-purpose), ECL (ultra fast), MOS (high density), and CMOS (low power — used in phones, cameras, all portable devices). Each trades off speed, power, and density differently.
+
+Key specs: fan-out (how many gate inputs one output can drive), fan-in (number of inputs on a gate), propagation delay (how long a signal takes to travel from input to output), noise margin (how much electrical noise the circuit can tolerate before giving a wrong output), and power dissipation (how much current the gate draws from the supply).

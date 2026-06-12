@@ -1,0 +1,22 @@
+Sequential logic
+D flip-flop: captures D input on the rising clock edge and holds it until the next edge.
+T flip-flop: toggles its output on every clock edge when T is high — commonly used in counters.
+JK flip-flop: J=1,K=0 sets output; J=0,K=1 resets; J=K=1 toggles.
+Register: a group of binary cells (each cell stores one bit).
+Binary cell: a device with two stable states, capable of storing one bit of information.
+Parity bit: an extra bit attached to a message to make the total number of 1s either even or odd — useful for detecting transmission errors.
+Combinational logic is "forgetful" — give it inputs, it gives you outputs, but the moment inputs change, so does the output. It has no memory of what happened before.
+Sequential logic fixes this. It adds the ability to remember — making circuits that can store state, count, detect sequences, and respond to history, not just the present moment.
+The key ingredient is the clock — a signal that ticks like a heartbeat, alternating between 0 and 1 at a fixed rate. Sequential circuits use this tick to decide when to act.
+Latch vs flip-flop
+A latch is the simpler of the two. It's "level-triggered" — it passes data through as long as its enable signal is high, like a door that stays open while you hold the handle. This makes it somewhat unpredictable in complex designs.
+A flip-flop is more disciplined. It's "edge-triggered" — it only captures data at the exact moment the clock ticks (the rising edge). Think of it like a camera shutter: it takes one snapshot per tick and ignores everything in between. This predictability is why flip-flops are the building block of virtually every modern chip.
+The four types
+
+D flip-flop — the most common. Whatever is at input D gets copied to output Q on the clock edge. Clean and simple.
+SR flip-flop — has a Set and Reset input. S=1 forces output high, R=1 forces it low. The forbidden state is both S and R = 1.
+JK flip-flop — an improved SR that eliminates the forbidden state. When both inputs are 1, it toggles the output.
+T flip-flop — a simplified JK. When T=1, output flips every clock tick. When T=0, it holds. Perfect for building counters.
+
+What they're used for
+Flip-flops are the atoms of memory. Chain them together and you get registers (store multi-bit values), counters (count clock ticks), and shift registers (move bits along one at a time). At a larger scale, they form the state elements of finite state machines — the logic that powers everything from traffic lights to CPUs.

@@ -1,0 +1,15 @@
+Logic synthesis converts your RTL code into a gate-level netlist — a list of gates and their connections. Physical design takes that netlist and turns it into an actual geometric layout on silicon: every transistor placed at a specific coordinate, every wire drawn on a specific metal layer. This GDSII file is what gets sent to the fab for manufacturing.
+
+The flow — step by step
+Floorplanning — the blueprint stage. Engineers define the chip boundary, decide where large blocks (memory, analog circuits, I/O pads) will sit, and plan the power distribution network. A bad floorplan causes congestion and timing failures downstream that are very hard to fix.
+
+Power planning — a grid of wide metal stripes (power rings and straps) is laid out to deliver stable voltage across the entire chip. Without it, parts of the chip starve for power and fail.
+
+Placement — standard cells (individual gates and flip-flops from the cell library) are given exact x,y coordinates inside the core area. The goal is to minimize wire length, reduce timing delays, and avoid routing congestion. Good placement is the single biggest factor in whether the design closes timing later.
+
+Clock Tree Synthesis (CTS) — the clock signal must reach thousands of flip-flops at nearly the same time. CTS builds a balanced tree of buffers to distribute the clock with minimal skew (arrival time difference) and minimal delay. The clock network alone can consume 30–50% of total chip power.
+
+Routing — metal wires are drawn on multiple layers to physically connect every pin to every other pin as defined by the netlist. Global routing maps out which regions wires will travel through; detailed routing draws the exact geometries while obeying Design Rule Checks (DRCs) that the fab mandates.
+
+Signoff and tapeout
+After routing, the design goes through final verification: STA for timing closure, DRC to check all manufacturing rules are met, and LVS (Layout vs Schematic) to confirm the layout matches the original netlist. Once all checks pass, the GDSII is sent to the foundry — this moment is called tapeout.

@@ -1,0 +1,16 @@
+Clock domain crossing (CDC): occurs when a signal passes between two different clock domains — can cause metastability.
+A synchronizer uses two flip-flops in series to reduce the probability of metastability propagating through the design.
+Clock skew: difference in arrival time of the clock signal at different flip-flops.
+Clock jitter: variation in clock period from cycle to cycle — reduces effective timing margin.
+A clock domain is a group of flip-flops all driven by the same clock signal. Real chips almost always have multiple clock domains — a CPU core running at 3 GHz, a USB interface at 480 MHz, a memory controller at a different frequency entirely. Each group is its own domain with its own timing world.
+
+The crossing problem
+When a signal generated in one clock domain is used in another, you have a clock domain crossing (CDC). The danger is that the two clocks have no fixed relationship — they tick independently. At any moment, the source signal might be changing at the exact instant the destination flip-flop's clock edge arrives. This violates setup or hold time and causes metastability — the flip-flop output gets stuck in an undefined voltage level between 0 and 1 for an unpredictable duration before resolving. If that bad value propagates into logic, the system crashes or produces wrong results.
+
+The 2-FF synchronizer
+You cannot eliminate metastability, but you can reduce its probability to near zero. The standard solution is the two flip-flop synchronizer: two flip-flops in series, both clocked by the destination clock, with no logic between them. If the first flip-flop goes metastable, it has a full clock cycle to resolve before the second flip-flop samples it. The second flip-flop is extremely unlikely to see a metastable input. The output of the second flip-flop is the safe, synchronized signal used by the rest of the destination domain.
+
+For single-bit control signals, the 2-FF synchronizer is the go-to tool. For multi-bit buses, you need more sophisticated techniques (Gray coding, handshake protocols, or asynchronous FIFOs) because you can't independently synchronize each bit — they must all land in the same cycle or the combined value will be corrupted.
+
+Skew and jitter
+Clock skew is the difference in clock arrival time at different flip-flops within the same domain. It eats into your timing margin — positive skew can help setup time but hurts hold time. Clock jitter is the cycle-to-cycle variation in the clock period itself, caused by noise in the PLL or power supply. Both reduce the effective timing budget available to combinational logic.

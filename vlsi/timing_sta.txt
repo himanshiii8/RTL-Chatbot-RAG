@@ -1,0 +1,28 @@
+Setup time (t_setup): minimum time before the clock edge that data must be stable at the flip-flop input.
+Hold time (t_hold): minimum time after the clock edge that data must remain stable.
+Violating either window causes metastability — the output hovers at an intermediate voltage or oscillates unpredictably.
+Metastability analogy: a ball balanced on a hilltop — it will eventually fall, but you cannot predict when or which way.
+Critical path: the longest combinational delay chain between any two sequential elements; it sets the maximum operating frequency (f_max).
+Slack = required arrival time − actual arrival time. Positive slack = timing met; negative slack = timing violation.
+STA verifies timing without simulation by checking all paths against required time windows.
+Clock skew: difference in clock arrival time across different flip-flops — positive skew can help setup but hurts hold.
+Clock jitter: cycle-to-cycle variation in clock period — reduces effective timing margin.
+Multi-stage synchronizers reduce the probability of metastability propagating through the design.
+Static Timing Analysis (STA) is how engineers verify that a chip will run correctly at its target clock speed — without running a single simulation. Instead of applying test inputs and watching what happens, STA mathematically checks every signal path to make sure data always arrives on time. Before STA existed, engineers had to guess which paths were slow, a process that was unreliable and missed many bugs.
+
+Setup and hold — the two timing rules
+Every flip-flop has two strict timing requirements around the clock edge:
+
+Setup time — data must arrive and be stable for a minimum window before the clock edge. If data arrives too late, the flip-flop doesn't have enough time to latch it correctly and captures garbage.
+
+Hold time — data must remain stable for a minimum window after the clock edge. The flip-flop needs a brief moment to lock the value in. If data changes too quickly after the edge, it corrupts the latch.
+
+Violating either rule causes metastability — the flip-flop output gets stuck in an undefined voltage between 0 and 1, unpredictably crashing downstream logic.
+
+Slack
+Slack is the timing safety margin: required arrival time minus actual arrival time. Positive slack means data arrives early — timing is met. Negative slack means data arrives too late — timing is violated. A chip with negative slack on any path will malfunction at the target frequency. Fixing it means either speeding up the logic or slowing down the clock.
+
+Critical path
+The critical path is the longest chain of logic delays between any two flip-flops in the design. It's the bottleneck — the path that limits how fast the chip can run. Every other path has leftover margin (positive slack), but the critical path has the least. STA tools report the worst-case path so engineers know exactly where to focus their optimization effort.
+
+Industry tools used for STA include Synopsys PrimeTime and Cadence Tempus. Timing constraints are written in SDC (Synopsys Design Constraints) format.

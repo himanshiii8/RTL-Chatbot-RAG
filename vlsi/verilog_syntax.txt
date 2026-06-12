@@ -1,0 +1,21 @@
+A Verilog module is the basic building block — it has a name, input/output ports, and internal logic.
+always block: describes sequential or combinational logic.
+Sequential logic → use non-blocking assignments (<=).
+Combinational logic → use blocking assignments (=).
+Latch inference: if not all conditions are covered in a combinational always block, a latch is inferred. Always use a default assignment to prevent this
+Verilog is a Hardware Description Language (HDL) — you use it to describe digital circuits in text, rather than drawing schematics. Unlike C or Python where code runs line by line on a processor, Verilog describes hardware that operates in parallel. Think of it less like writing a program and more like wiring up a circuit in words.
+
+Module — the basic unit
+Every piece of hardware in Verilog is a module. A module has a name, a list of input and output ports, and the internal logic that connects them. Modules can be nested inside each other — small building blocks combine into larger ones, all the way up to the full chip.
+
+The always block
+The always block is where you describe behavior. It executes whenever the signals in its sensitivity list change. There are two kinds:
+
+Combinational always block — triggered by any input change (always @(*)). Describes logic with no clock. Use blocking assignments (=) here — they execute one after another, like normal code. Example: a multiplexer or adder.
+
+Sequential always block — triggered by a clock edge (always @(posedge clk)). Describes flip-flops and registers. Use non-blocking assignments (<=) here — all right-hand sides are evaluated first, then all left-hand sides update simultaneously at the end of the clock edge. This matches how real flip-flops behave in hardware.
+
+Mixing the two types up is one of the most common Verilog mistakes, causing simulations that don't match actual hardware.
+
+Latch inference — the silent bug
+If you write a combinational always block but forget to assign an output in every possible condition (e.g., missing an else clause), the synthesis tool has no choice but to infer a latch — a memory element you didn't intend to create. Latches are hard to time and often cause bugs. The fix is always to include a default assignment at the top of combinational blocks.

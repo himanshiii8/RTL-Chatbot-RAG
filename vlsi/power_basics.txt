@@ -1,0 +1,15 @@
+Dynamic power: consumed when transistors switch — proportional to capacitance × voltage² × frequency.
+Static power: consumed due to leakage current even when the circuit is not switching — increases at smaller technology nodes.
+Clock gating: reduces dynamic power by stopping the clock to inactive logic blocks.
+Power isn't just about battery life. Too much power means too much heat, and heat kills chips. In modern designs at advanced nodes like 5nm and 3nm, managing power is as critical as managing timing. A chip that runs fast but overheats is useless.
+
+Dynamic power
+Dynamic power is consumed whenever a transistor switches state — charging and discharging the tiny capacitors at every gate output. The formula is: P = α × C × V² × f, where α is how often signals toggle, C is the capacitance being driven, V is the supply voltage, and f is the clock frequency.
+
+This tells you the levers: lower the voltage (huge impact since it's squared), reduce switching activity, shrink capacitance, or lower the clock frequency. Voltage reduction is the most powerful but often constrained by performance requirements.
+
+Static (leakage) power
+Static power is consumed even when nothing is switching — just from transistors being on and leaking a small current. It's unavoidable in CMOS, and it gets dramatically worse at smaller technology nodes because transistors become physically tiny and harder to turn fully off. In a smartphone chip sitting idle, static power is often the dominant concern.
+
+Clock gating
+The clock is the highest-frequency signal on a chip — it toggles billions of times per second and drives every flip-flop. Clock-related switching alone can account for 30–50% of total dynamic power. Clock gating tackles this directly: when a block of logic isn't doing useful work, an enable-controlled gate stops the clock from reaching it. The flip-flops freeze, stop switching, and stop consuming dynamic power. It's the most widely used low-power technique in ASIC design. The key rule: the enable signal must be stable when the clock is low, to avoid glitches.
